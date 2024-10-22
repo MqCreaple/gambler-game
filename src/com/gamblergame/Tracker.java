@@ -1,6 +1,7 @@
 package com.gamblergame;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Tracker {
     /**
@@ -18,18 +19,18 @@ public class Tracker {
             return tracker;
         }
 
-        public void add(ArrayList<Integer> record) {
+        public void add(Collection<? extends Integer> record) {
             assert(record.size() == tracker.numPlayer);
-            tracker.tracker.addAll(record);
+            tracker.history.addAll(record);
         }
     }
 
     private int numPlayer;
-    private ArrayList<Integer> tracker;
+    private ArrayList<Integer> history;
 
     public Tracker(int numPlayer) {
         this.numPlayer = numPlayer;
-        this.tracker = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     /**
@@ -38,10 +39,14 @@ public class Tracker {
      * @param playerId the player ID to query (start from 0)
      */
     public int query(int round, int playerId) {
-        return this.tracker.get(round * numPlayer + playerId);
+        return this.history.get(round * numPlayer + playerId);
     }
 
     public int getNumPlayer() {
         return numPlayer;
+    }
+
+    public int getNumRounds() {
+        return history.size() / numPlayer;
     }
 }
